@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:presentation_displays/display.dart';
@@ -59,7 +60,9 @@ class DisplayManager {
     List<Display> displays = [];
     for (var element in origins) {
       final map = jsonDecode(jsonEncode(element));
-      displays.add(displayFromJson(map));
+      displays.add(kReleaseMode
+          ? displayReleaseFromJson(map as Map<String, dynamic>)
+          : displayFromJson(map as Map<String, dynamic>));
     }
     return displays;
   }
